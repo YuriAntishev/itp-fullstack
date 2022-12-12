@@ -13,6 +13,15 @@ namespace Controllers {
     });
   };
 
+  export const getSubjects: THandler = (_, reply) => {
+    app.pg.query("SELECT * FROM subject ORDER BY id ASC", (error, results) => {
+      if (error) {
+        throw error;
+      }
+      reply.status(200).send(results.rows);
+    });
+  };
+
   export const getStudentInfoById: THandler = (request, reply) => {
     const { id } = request.params as any;
 
@@ -39,44 +48,54 @@ namespace Controllers {
     });
   };
 
-  export const getSubjects: THandler = (_, reply) => {
-    app.pg.query("SELECT * FROM subject ORDER BY id ASC", (error, results) => {
-      if (error) {
-        throw error;
-      }
-      reply.status(200).send(results.rows);
+  export const deleteStudent: THandler = (request, reply) => {
+    const { id } = request.params as any;
+    const dbQuery =
+      'DELETE FROM student WHERE id=($1)';
+    app.pg.query(dbQuery, [id], (err: any) => {
+      if (err) throw Error();
+
+      reply.send(`Student with ID: ${id} deleted successfully.`);
     });
   };
-  //   export const getProjects: THandler = (_, reply) => {
-  //     const dbQuery =
-  //       'SELECT id, nameofproject FROM "Projects"';
-  //     app.pg.query(dbQuery, (err: any, result: any) => {
-  //       if (err) throw Error();
-  //       reply.send(result.rows);
-  //     });
-  //   };
 
-  //   export const postProject: THandler = (request, reply) => {
-  //     const { nameofproject } = request.body as any;
-  //     const dbQuery =
-  //       'INSERT INTO "Projects" (nameofproject) VALUES ($1)';
-  //     app.pg.query(dbQuery, [nameofproject], (err: any) => {
-  //       if (err) throw Error();
+  export const deleteSubject: THandler = (request, reply) => {
+    const { id } = request.params as any;
+    const dbQuery =
+      'DELETE FROM subject WHERE id=($1)';
+    app.pg.query(dbQuery, [id], (err: any) => {
+      if (err) throw Error();
 
-  //       reply.send({ nameofproject });
-  //     });
-  //   };
+      reply.send(`Subject with ID: ${id} deleted successfully.`);
+    });
+  };
 
-  //   export const deleteProject: THandler = (request, reply) => {
-  //     const { id } = request.params as any;
-  //     const dbQuery =
-  //       'DELETE FROM "Projects" WHERE id=($1)';
-  //     app.pg.query(dbQuery, [id], (err: any) => {
-  //       if (err) throw Error();
+  export const updateStudent: THandler = (request, reply) => {
+    const { id } = request.params as any;
+    const { fullname, date_of_birth } = request.body as any;
 
-  //       reply.send(`Project with ID: ${id} deleted successfully.`);
-  //     });
-  //   };
+    const dbQuery = 'UPDATE student SET fullname = $1, date_of_birth = $2 WHERE id = $3';
+
+    app.pg.query(dbQuery, [fullname, date_of_birth, id], (err) => {
+      if (err) throw Error();
+
+      reply.send('Student details updated successfully.');
+    });
+  };
+
+  export const updateSubject: THandler = (request, reply) => {
+    const { id } = request.params as any;
+    const { name, start_time, end_time } = request.body as any;
+
+    const dbQuery = 'UPDATE subject SET name = $1, start_time = $2, end_time = $3 WHERE id = $4';
+
+    app.pg.query(dbQuery, [name, start_time, end_time, id], (err) => {
+      if (err) throw Error();
+
+      reply.send('Subject details updated successfully.');
+    });
+  };
+
 }
 
 export default Controllers;

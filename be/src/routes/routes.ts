@@ -23,6 +23,26 @@ const allRoutes: RouteOptions[] = [
     url: "/student_info/:id",
     handler: Controllers.getStudentInfoById,
   },
+  {
+    method: "DELETE",
+    url: "/student/:id",
+    handler: Controllers.deleteStudent,
+  },
+  {
+    method: "DELETE",
+    url: "/subject/:id",
+    handler: Controllers.deleteSubject,
+  },
+  {
+    method: "PUT",
+    url: "/student/:id",
+    handler: Controllers.updateStudent,
+  },
+  {
+    method: "PUT",
+    url: "/subject/:id",
+    handler: Controllers.updateSubject,
+  },
 ];
 
 const RoutesProvider: TProvider = (fastify, _, done) => {

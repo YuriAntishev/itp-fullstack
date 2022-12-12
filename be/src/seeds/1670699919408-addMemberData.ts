@@ -5,13 +5,14 @@ export class addMemberData1670699919408 implements MigrationInterface {
     await queryRunner.query(`
         insert INTO member ("student_id", "subject_id", "role")
             VALUES(1, 1, 0),
-            (2, 1, 0),
+            (2, 2, 0),
             (3, 1, 0),  
             (1, 2, 0),  
-            (2, 2, 0),
+            (1, 5, 0),  
+            (2, 3, 0),
             (3, 3, 0),
-            (4, 1, 0),
-            (4, 3, 0)`);
+            (4, 4, 0),
+            (4, 5, 0)`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {}

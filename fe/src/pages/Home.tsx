@@ -19,8 +19,6 @@ const Home = () => {
   const studentsList = useSelector(selectStudentsList);
   const subjectsList = useSelector(selectStudentInfo);
 
-  console.log("studentsList", studentsList);
-
   useEffect(() => {
     dispatch(getStudents());
   }, [dispatch]);
@@ -42,7 +40,11 @@ const Home = () => {
               <List
                 dataSource={studentsList}
                 renderItem={(
-                  { id, fullname, date_of_birth }: any,
+                  {
+                    id,
+                    fullname,
+                    date_of_birth,
+                  }: { id: number; fullname: string; date_of_birth: string },
                   i: number
                 ) => (
                   <List.Item key={i}>
