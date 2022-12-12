@@ -1,0 +1,36 @@
+{
+  "name": "be",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "backend",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/index.js",
+    "dev": "nodemon --experimental-specifier-resolution=node src/index.ts",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "migration:create": "npm run typeorm migration:create src/migrations/MigrationFileName",
+    "seed:create": "npm run typeorm migration:create src/seeds/addMemberData",
+    "migration:run": "npm run typeorm migration:run -- -d src/config/migrations/ormconfig.ts",
+    "seeds:run": "npm run typeorm migration:run --transaction=each -- -d src/config/seeds/ormconfig.ts",
+    "migration:down": "npm run typeorm migration:revert"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/fastify-cors": "^2.1.0",
+    "@types/node": "^18.11.12",
+    "@types/pg": "^8.6.5",
+    "nodemon": "^2.0.20",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.2.0",
+    "@fastify/postgres": "^5.2.0",
+    "fastify": "^4.10.2",
+    "fastify-typeorm-plugin": "^2.2.1",
+    "pg": "^8.8.0",
+    "ts-node": "^10.9.1",
+    "typeorm": "^0.3.11"
+  }
+}
